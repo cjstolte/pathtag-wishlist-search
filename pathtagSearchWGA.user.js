@@ -14,7 +14,9 @@
 
 // @include      https://*pathtags.com/community/fulfillwish.php*
 // @run-at       document-end
-// @grant        none
+// @require      https://openuserjs.org/src/libs/sizzle/GM_config.js
+// @grant        GM_getValue
+// @grant        GM_setValue
 // ==/UserScript==
 
 var includeAlreadyInCollectionWGAIds = true;
@@ -38,12 +40,20 @@ var otherWantsIdsAndUsernameArr = otherWantsIdsAndUsername.split(',');
     'use strict';
 
     window.addEventListener('load', function() {
-        var x = document.body.innerHTML;
-        document.body.innerHTML = x.replace("Fulfill a Wish For Template", "<div id='searchDiv' style='cursor:pointer'>Search</div> Fulfill a Wish For Template");
 
-        var myDiv = document.querySelector ("#searchDiv");
+        setupGMConfig();
+
+        var x = document.body.innerHTML;
+        document.body.innerHTML = x.replace("Fulfill a Wish For Template", "<div id='cjstolteWLSearch' style='background-color:#1E62A1;color:#FF0000;width: 300px;margin-left: 95px;padding-top: 5px;padding-bottom: 5px;'><div id='wlSearchTitle' style='text-align:center'>Pathtag Wishlist Search</div><div id='wlSearchDiv' style='cursor:pointer;'>Search</div><div id='wlSearchSettings' style='cursor:pointer;'>Settings</div></div> Fulfill a Wish For Template");
+
+        var myDiv = document.querySelector("#wlSearchDiv");
         if (myDiv) {
-            myDiv.addEventListener ("click", searchForTags , false);
+            myDiv.addEventListener("click", searchForTags , false);
+        }
+
+        var wlSettingsDiv = document.querySelector("#wlSearchSettings");
+        if (wlSettingsDiv) {
+            wlSettingsDiv.addEventListener("click", openWLUserConfig);
         }
 
     }, false);
@@ -51,6 +61,75 @@ var otherWantsIdsAndUsernameArr = otherWantsIdsAndUsername.split(',');
 
 
 })();
+
+function setupGMConfig() {
+    GM_config.init({
+        'id': 'wlUserConfig',
+        'title': 'Pathtag Wishlist Tag Search Settings',
+        'fields':
+        {
+            'wlsWGASectionHeader':
+            {
+                'section': ['WGA User Tag Search Settings','Add just tags to these settings to search for WGA User Pathtags. This way it\'s seperated from your other desired tags'],
+                'type': 'hidden',
+                'value': 'sectionHeader'
+            },
+            'wlsWGAIds':
+            {
+                'label': 'List of Pathtag ID\'s:',
+                'type': 'text',
+                'size': '100',
+                'title': 'Provide list of tag #\'s seperated by commas \',\'',
+                'default': defaultWGAsearchListIds
+            },
+            'wlsWGAIdsIncludeCollection':
+            {
+                'label': 'Include tags already in your collection with WGA ID Search',
+                'type': 'checkbox',
+                'default': false
+            },
+            'wlsWGAUsernames':
+            {
+                'label': 'List of Pathtag Usernames:',
+                'type': 'text',
+                'size': '100',
+                'title': 'Provide list of Pathtag usernames seperate by commas \',\'',
+                'default': defaultWGAsearchListUsername
+            },
+            'wlsWGAUsernamesIncludeCollection':
+            {
+                'label': 'Include tags already in your collection with WGA Username Search',
+                'type': 'checkbox',
+                'default': false
+            },
+            'wlsOtherSectionHeader':
+            {
+                'section': ['Settings to search for other desired tags', 'Add other tags you are on the lookout for and don\'t want mixed in with the WGA search'],
+                'type': 'hidden',
+                'value': 'sectionHeader'
+            },
+            'wlsOtherSearch':
+            {
+                'label': 'List of Pathtag ID\'s and Usernames:',
+                'type': 'text',
+                'size': '100',
+                'title': 'Provide list of Pathtag Tag ID\'s and usernames seperate by commas \',\'',
+                'default': defaultWGAsearchListUsername
+            },
+            'wlsOtherIncludeCollection':
+            {
+                'label': 'Include tags already in your collection with Other Tags Search',
+                'type': 'checkbox',
+                'default': false
+            },
+        }
+    });
+}
+
+function openWLUserConfig() {
+    GM_config.open();
+}
+
 
 function searchForTags() {
 
@@ -164,10 +243,19 @@ function searchForTags() {
 	console.log(foundOtherArray);
 }
 
+/***********************************
+************************************
+***** DO NOT MODIFY BELOW HERE *****
+************************************
+************************************/
 
-// Script Required Variables here: DO NOT MODIFY
+// Script Required Variables here:
 var allTagsClass = "alltags";
 var notInCollectionClass = "wl_notinmycollection";
 var inMyCollectionClass = "wl_inmycollection";
 var tagIdLinkClass = "tagid";
 var tagCreatorClass = "by";
+
+var defaultWGAsearchListIds = "5512,5568,5594,5609,5923,6001,6373,6523,6524,7037,7323,7434,7804,8836,9014,9619,9785,10116,10160,10273,10379,10435,10436,10940,11700,12334,12601,12602,12603,12604,12605,12817,12819,12821,12840,12927,13190,13712,13730,14503,14629,14675,15292,15410,15782,15811,15824,15976,16112,16381,16530,16957,17003,17135,17201,17417,17607,17737,18035,18111,18221,18656,18862,19145,19262,19279,19620,20060,20088,20161,20425,20533,21090,22209,22621,22857,23042,23177,23237,23777,24261,24509,24599,24718,25199,25315,25511,25600,25704,26038,26054,26056,26314,26511,26538,26956,27390,27528,27626,28434,29704,30080,30472,30601,30827,31294,31753,31782,31789,31872,32560,32878,33450,34043,35811,36457,37062,37295,37945,38491,38630,38780,38802,39175,39385,39667,40198,41130,41186,41236,42083,42215,42248,42706,42895,43593,43801,44132,44219,44291,44539,44939,45157,45289,46022,46046,46096,46337,47044,47245,47483,47523,47588,47996,48104,48210,48235,48336,48523,48576,48958,48962,49199,49305,49464,49574,49706,49769,49840";
+var defaultWGAsearchListUsername = "AstroD-Team,B-Jules,BSA Potawatimi,Potawatomi Area Council,CacheARRRS,Cache_boppin_BunnyFuFu,Cartmanraxter,cgutzmer,chewysfolks,djwini,Dog and Me,dseer,Geocaching Widow,Widow,GeoKatzen,Team Black-cat,Team Black-Cat,ham fam,jbase,Jcee,JMGULLY,kaysmom,LadyMystis,LandowskiFamily,Lobsters9494,MCJ_r_Us,MikMac4,Mindfree,Mister Greenthumb,Mos Eisley Pirates,Nate_USA,pharmteam,Pharmteam,Pipalini,Potawatomi,Pulda1,RangerBoy,rcflyer2242,RJ McKenzie,Rocketmac,rogo63surveyor,Scottdamnit,Silyngufy,Sunshine,sweetlife,sweetlife-All Gone,Tarz,Team BearMoose,Team~DNF,teamrusch,The Goldie Diggers,The Tapps Jr,the5blues,uws22,Videochic,zeemanclan,BillT";
+var defaultOtherWantsIdsAndUsername = "1000,2000";
