@@ -7,9 +7,9 @@
 // @homepageURL  https://github.com/cjstolte/pathtag-wishlist-search/
 // @iconURL      https://raw.githubusercontent.com/cjstolte/pathtag-wishlist-search/main/pathtags.ico
 
-// @updateURL    https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearch.user.js
-// @downloadURL  https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearch.user.js
-// @version      1.0
+// @updateURL    https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearchWGA.user.js
+// @downloadURL  https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearchWGA.user.js
+// @version      1.0.1
 
 
 // @include      https://*pathtags.com/community/fulfillwish.php*
