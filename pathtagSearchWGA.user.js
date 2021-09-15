@@ -150,7 +150,7 @@ function searchForTags() {
 		notInCollectionIds.push(notInCollElementsArr[i].getElementsByClassName(tagIdLinkClass)[0].innerHTML.substring(6).trim());
 
 		// Extract tag creator
-		notInCollectionBy.push(notInCollElementsArr[i].getElementsByClassName("by")[0].getElementsByTagName("a")[0].innerHTML);
+		notInCollectionBy.push(notInCollElementsArr[i].getElementsByClassName("by")[0].getElementsByTagName("a")[0].innerHTML.toLowerCase());
 	}
 
 	// Extact info for tags in current collection
@@ -160,7 +160,7 @@ function searchForTags() {
 		inCollectionIds.push(inCollElementsArr[j].getElementsByClassName(tagIdLinkClass)[0].innerHTML.substring(6).trim());
 
 		// Extract tag creator
-		inCollectionBy.push(inCollElementsArr[j].getElementsByClassName("by")[0].getElementsByTagName("a")[0].innerHTML);
+		inCollectionBy.push(inCollElementsArr[j].getElementsByClassName("by")[0].getElementsByTagName("a")[0].innerHTML.toLowerCase());
 	}
 
 
@@ -184,12 +184,12 @@ function searchForTags() {
 
 	for (var m = 0; m < WGAsearchListUsernameArr.length; m++)
 	{
-		if (notInCollectionBy.includes(WGAsearchListUsernameArr[m])) {
+		if (notInCollectionBy.includes(WGAsearchListUsernameArr[m]).toLowerCase()) {
 			WGAUsernameFoundArray.push(WGAsearchListUsernameArr[m]);
 		}
 
 		if (includeAlreadyInCollectionWGAUsername) {
-			if (inCollectionBy.includes(WGAsearchListUsernameArr[m])) {
+			if (inCollectionBy.includes(WGAsearchListUsernameArr[m].toLowerCase())) {
 				WGAUsernameFoundArray.push(WGAsearchListUsernameArr[m]);
 			}
 		}
@@ -197,12 +197,12 @@ function searchForTags() {
 
 	for (var n = 0; n < otherWantsIdsAndUsernameArr.length; n++)
 	{
-		if (notInCollectionIds.includes(otherWantsIdsAndUsernameArr[n]) || notInCollectionBy.includes(otherWantsIdsAndUsernameArr[n])) {
+		if (notInCollectionIds.includes(otherWantsIdsAndUsernameArr[n]) || notInCollectionBy.includes(otherWantsIdsAndUsernameArr[n].toLowerCase())) {
 			foundOtherArray.push(otherWantsIdsAndUsernameArr[n]);
 		}
 
 		if (includeAlreadyInCollectionOther) {
-			if (inCollectionIds.includes(otherWantsIdsAndUsernameArr[n]) || inCollectionBy.includes(otherWantsIdsAndUsernameArr[n])) {
+			if (inCollectionIds.includes(otherWantsIdsAndUsernameArr[n]) || inCollectionBy.includes(otherWantsIdsAndUsernameArr[n].toLowerCase())) {
 				foundOtherArray.push(otherWantsIdsAndUsernameArr[n]);
 			}
 		}
