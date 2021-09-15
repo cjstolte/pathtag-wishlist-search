@@ -9,7 +9,7 @@
 
 // @updateURL    https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearchWGA.user.js
 // @downloadURL  https://github.com/cjstolte/pathtag-wishlist-search/blob/main/pathtagSearchWGA.user.js
-// @version      1.0.1
+// @version      2.0.0
 
 
 // @include      https://*pathtags.com/community/fulfillwish.php*
